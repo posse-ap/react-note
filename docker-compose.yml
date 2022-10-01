@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+  react-note-web:
+    build: ./docker/react-note-web
+    container_name: react-note-web
+    ports:
+      - '80:80'
+      - '3000:3000'
+    volumes:
+      - .:/srv:cached
+
+  react-note-mysql:
+    image: mysql:8
+    container_name: react-note-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: react-note
+    ports:
+      - '3306:3306'

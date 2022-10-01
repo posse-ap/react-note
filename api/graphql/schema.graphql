@@ -1,0 +1,67 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+
+type Query {
+
+    "ノートの取得"
+    notes: [Note!]! @all
+
+
+    "ノートの取得(ID指定)"
+    note(
+      "ノートの取得(ID指定)"
+      id: ID @eq @rules(apply: ["required:id"])
+    ): Note @find
+}
+
+
+type Mutation {
+
+    "ノートの追加"
+    createUser(
+        "タイトル"
+        title: String!
+
+        "本文"
+        body: String
+
+    ): Note! @create
+
+
+    "ノートの更新"
+    updateUser(
+        "ノートID"
+        id: ID!,
+
+        "タイトル"
+        title: String!
+
+        "本文"
+        body: String
+    ): Note @update
+
+    "ノートの削除"
+    deleteNote(
+        "ノートID"
+        id: ID!
+    ): Note @delete
+}
+
+
+type Note {
+    "ID"
+    id: ID!
+
+    "タイトル"
+    title: String!
+
+    "本文"
+    body: String
+
+    "作成日時"
+    created_at: DateTime!
+
+    "更新日時"
+    updated_at: DateTime!
+}
