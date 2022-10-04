@@ -1,7 +1,6 @@
 import React     from 'react';
 import NoteList  from './NoteList';
 import Editor    from './Editor';
-import ButtonAdd from './ButtonAdd';
 
 export default function App() {
     return (
@@ -45,7 +44,6 @@ export default function App() {
                         transform: 'translateX(-50%)',
                     }}
                 >
-                    <ButtonAdd></ButtonAdd>
                 </div>
             </div>
 

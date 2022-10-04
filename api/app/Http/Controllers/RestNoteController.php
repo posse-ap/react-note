@@ -6,6 +6,7 @@ use App\Models\Note;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class RestNoteController extends Controller
 {
@@ -27,17 +28,16 @@ class RestNoteController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'body'  => 'nullable|string',
-        ]);
+        try {
+            $validated = $request->validate([
+                'title' => 'required|max:255',
+                'body'  => 'nullable|string',
+            ]);
+        } catch (ValidationException $e) {
+            abort(405, '入力が不正です');
+        }
 
-
-        dd($validated);
-
-        //Note::create()
-
-
+        return Note::create($validated);
     }
 
     /**
@@ -59,19 +59,25 @@ class RestNoteController extends Controller
      * @param int                      $id
      * @return Response
      */
-    public function update(Request $request, int $id)
+    public function update(int $id, Request $request)
     {
-        $note = Note::firstOrFail($id);
+        $note = Note::findOrFail($id);
 
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'body'  => 'nullable|string',
-        ]);
+        dd($request->all());
 
-        //$note->fill()
-        //$note->save();
+        try {
+            $validated = $request->validate([
+                'title' => 'required|max:255',
+                'body'  => 'nullable|string',
+            ]);
+        } catch (ValidationException $e) {
 
-        //return
+            dd($e);
+            abort(405, '入力が不正です');
+        }
+
+        $note->fill($validated)->save();
+        return $note;
     }
 
     /**

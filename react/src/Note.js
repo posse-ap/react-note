@@ -1,9 +1,10 @@
 import React      from 'react';
 import {useNotes} from './NoteProvider';
+import DateFormat from './DateFormat';
 
-export default function Note({id, title, body, updatedAt, selected}) {
+export default function Note({id, title, body, updated_at, selected}) {
 
-    const {updateSelectNote} = useNotes();
+    const {setSelectNoteId} = useNotes();
 
     return (
         <section
@@ -16,7 +17,7 @@ export default function Note({id, title, body, updatedAt, selected}) {
                 display        : 'flex',
                 flexDirection  : 'column',
             }}
-            onClick={() => updateSelectNote(id)}
+            onClick={() => setSelectNoteId(id)}
         >
             <h1
                 style={{
@@ -44,7 +45,7 @@ export default function Note({id, title, body, updatedAt, selected}) {
                     color    : '#909090',
                     alignSelf: 'flex-end',
                 }}>
-                {updatedAt}
+                <DateFormat date={updated_at} />
             </div>
         </section>
     );
