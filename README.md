@@ -106,6 +106,8 @@ reactの開発モードを起動すると、下記URLでアクセスできます
 | note-data.json  | サンプルデータ         |
 
 
+UIの実装サンプルは、こちらです。  
+[http://localhost/ui-sample/index.html](http://localhost/ui-sample/index.html)
 
 ----
 
