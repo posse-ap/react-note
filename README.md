@@ -1,45 +1,84 @@
-# 実践課題(11,12,14,16週目)
+# 実践課題
 
 下記のようなメモアプリを作成します。
 
-[Figmaのデザインファイル](https://www.figma.com/file/C3GCHbPqQRZSCKWmnKMr3U/React%E3%83%99%E3%83%BC%E3%82%B7%E3%83%83%E3%82%AF?node-id=35%3A2 "Figma")
+[Figmaのデザインファイル](https://www.figma.com/file/C3GCHbPqQRZSCKWmnKMr3U "Figma")
 
 ![UI](./react-note-ui.png "UI")
 
 
-# 環境の使い方
+各ディレクトリは下記のようになっています。  
+課題を行う際は、`/react`ディレクトリを使って下さい。
 
-#### 1. mainリポジトリをクローン
+| ディレクトリ           | 内容                            |
+|------------------|-------------------------------|
+| /react           | 課題作成用ディレクトリ                   |
+| /api              | サーバーサイド(REST API，GraphQL API) |
+| /docker           | Docker環境                      |
+| /react-ui         | (実装サンプル)11〜12週目の実装サンプル        |
+| /react-ui-graphql | (実装サンプル)14週目の実装サンプル           |
+| /react-ui-rest    | (実装サンプル)16週目の実装サンプル           |
+
+
+
+----
+
+# 【11〜12週目】ノートアプリ作成(1)
+
+
+## 1. 環境構築
+
+### 1-1. mainリポジトリをクローン
 
 ```shell
 git clone https://github.com/posse-ap/react-note.git
 ```
 
-#### 2. Docker環境を起動
+### 1-2. Docker環境を起動
 
 ```shell
 cd react-note
 docker-compose up -d
 
-; api(laravelの初期設定)
-docker-compose run react-note-web bash -c 'cd api && composer install && php artisan migrate'
+; api(laravelの設定、初期データの作成)
+docker-compose run react-note-web bash -c 'cd api && composer install && php artisan migrate:fresh --seed'
 ```
 
 
-#### 3. Reactの開発モードを起動
+
+## 2.ノートアプリの作成
+
+Reactハンズオンラーニング4〜7章では、StarRatingコンポーネントの作成を通じて、
+
+- 要素とコンポーネントの基礎
+- JSXの
+- ステート管理
+- コンテキスト
+- フック
+
+の使い方を学んできました。  
+これらの復習を兼ねて、ノートアプリを作成してみましょう。
+
+
+### 2-1. React環境の起動
+
+開発は、`/react`ディレクトリを使います。
+
 
 ```shell
 ; コンテナ内に入る
+cd react-note
 docker-compose exec react-note-web bash
 
 ; reactディレクトリに移動
 cd react
 
+; ライブラリのインストール
+npm install
+
 ; reactの開発モードを開始
 npm run start
 ```
-
-#### 4. ブラウザから接続
 
 reactの開発モードを起動すると、下記URLでアクセスできます。
 
@@ -47,44 +86,36 @@ reactの開発モードを起動すると、下記URLでアクセスできます
 > ※httpsでは無いことに注意
 
 
+### 2-3. 早速作る
 
-# 課題
+`/react/src`ディレクトリを好きなエディター作ってみましょう！
 
-## 11〜12週目 ノートアプリ作成1
-
-| 作業ブランチ | 実装サンプルブランチ |
-|--------|------------|
-| main   | ui         |
+プロジェクトに必要な画像やサンプルデータは用意してあります。
 
 
-Reactハンズオンラーニング5〜7章で勉強してきた内容の復習です。  
-ノートアプリのUIを作成して下さい。
-
-チェックアウトするブランチは「main」ブランチです。
-
-```shell
-; 現在のブランチがmainブランチ以外の場合
-git checkout main
-```
+| ファイル        | 内容               |
+|-----------------|------------------------|
+| App.js          | Reactのメインファイル  |
+| iconAdd.svg     | (アイコン画像)追加     |
+| iconDelete.svg  | (アイコン画像)削除     |
+| note-data.json  | サンプルデータ         |
 
 
-reactの作業ディレクトリは
-> /react
-
-初期データは
-
-> /react/note-data.json
-
-を使って下さい。
+完成したものは
+こちら
+を参考にして下さい。
 
 
-## 14週目 ノートアプリの外部連携1 - REST
 
-| 作業ブランチ     | 実装サンプルブランチ |
-|------------|------------|
-| 11〜12週目の続き | ui-rest    |
+## 【14週目】ノートアプリ作成(2) 外部連携:REST
 
-「11〜12週目 ノートアプリ作成1」で作成したものから、下記２点を修正して下さい。
+Reactハンズオンラーニング8章1〜8章5で勉強した内容の復習です。  
+
+
+「【11〜12週目】ノートアプリ作成(1)」で作成ものは、JSONからデータを取得していましたが、  
+REST APIからデータを取得するように修正しましょう。
+
+修正内容は、下記です。
 
 - データをREST APIから取得してノート一覧を表示
   - 利用するAPI: http://localhost/rest/note
@@ -93,11 +124,12 @@ reactの作業ディレクトリは
 
 ※<span style="color: red; ">「新規作成」「削除」機能は、8章で学習する範囲を超えているので実装しなくてOKです。</span>
 
+
 APIドキュメントは下記に用意してありますので、参考にして下さい。  
 http://localhost/rest
 
 
-## 16週目 ノートアプリの外部連携2 - GraphQL
+## 【16週目】ノートアプリ作成(2) 外部連携:GraphQL
 
 
 | 作業ブランチ  | 実装サンプルブランチ |
@@ -105,7 +137,15 @@ http://localhost/rest
 | 14週目の続き | ui-graphql |
 
 
-「14週目 ノートアプリの外部連携1 - REST」で作成したものを修正して、、
+Reactハンズオンラーニング8章6で勉強した内容の復習です。
+
+
+
+「【14週目】ノートアプリ作成(2) 外部連携:REST」で作成ものは、REST APIからデータを取得していましたが、  
+GraphQL APIからデータを取得するように修正しましょう。
+
+
+修正内容は、下記です。
 
 - データをGraphQL APIから取得してノート一覧を表示
   - ```graphql
@@ -121,8 +161,8 @@ http://localhost/rest
 - 一覧で選択したノートを右側の編集エリアに表示
   - ```graphql
     # クエリサンプル
-    query($id:ID ) {
-      note(id: $id) {
+    query($noteId:ID) {
+      note(id: $noteId) {
         id
         title
         body
@@ -131,3 +171,6 @@ http://localhost/rest
     ```
 
 ※<span style="color: red; ">「新規作成」「削除」機能は、8章で学習する範囲を超えているので実装しなくてOKです。</span>
+
+APIドキュメントは下記に用意してありますので、参考にして下さい。  
+http://localhost/graphiql

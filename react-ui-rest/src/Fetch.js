@@ -30,11 +30,7 @@ export default function Fetch({
     ),
 }) {
 
-
-
     const {loading, data, error} = useFetch(uri);
-
-    //console.log(data)
 
     if (error) return renderError(error);
     if (loading) return loadingFallback;
