@@ -20,9 +20,10 @@
 | /react-ui-rest    | (実装サンプル)16週目の実装サンプル           |
 
 
-実際に、メモアプリがどのように動作するかは、   
+実際に、メモアプリがどのように動作するかは、下記URLを参考にして下さい   
 [http://localhost/ui-sample/index.html](http://localhost/ui-sample/index.html)  
-を参考にして下さい。
+※環境構築後アクセス可能
+
 
 
 ----
